@@ -1,12 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  
+	
+	<!--This parameters are used to generate the Artifacts.Zip-->
   	<PropertyGroup>
-		  <BuildCounter>2.6.0.0</BuildCounter>
+		<BuildMajor>0</BuildMajor>
+		<BuildMinor>0</BuildMinor>
+		<BuildVersion>0</BuildVersion>
+		<BuildRevision>0</BuildRevision> <!--This parameter is overwritten by TeamCity-->
    </PropertyGroup>
    
    
+    
   <PropertyGroup>
     <TPath>$(MSBuildProjectDirectory)\ExtensionPack\$(MSBuildToolsVersion)\MSBuild.ExtensionPack.tasks</TPath>
     <TPath Condition="Exists('$(MSBuildProjectDirectory)\ExtensionPack\$(MSBuildToolsVersion)\MSBuild.ExtensionPack.tasks')">$(MSBuildProjectDirectory)\ExtensionPack\$(MSBuildToolsVersion)\MSBuild.ExtensionPack.tasks</TPath>
@@ -92,7 +97,7 @@
 		  <WorkingDir>%(OutputDirectory.Fullpath)</WorkingDir>
 		  <ZipFileName>Artifacts</ZipFileName>
 		</PropertyGroup>
-		<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(Files)" CompressionLevel="BestCompression" ZipFileName="$(WorkingDir)$(ZipFileName)_$(AssemblyName)_$(BuildCounter)_%(Files.Group).zip" />
+		<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(Files)" CompressionLevel="BestCompression" ZipFileName="$(WorkingDir)$(ZipFileName)_$(AssemblyName)_$(BuildMajor)_$(BuildMinor)_$(BuildVersion)_$(BuildRevision)_%(Files.Group).zip" />
 	</Target>
 	<Target Name="DD">
 			<PropertyGroup>
