@@ -87,7 +87,7 @@
 		  <WorkingDir>%(OutputDirectory.Fullpath)</WorkingDir>
 		  <ZipFileName>Artifacts</ZipFileName>
 		</PropertyGroup>
-		<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(Files)" CompressionLevel="BestCompression" ZipFileName="$(WorkingDir)$(AssemblyName)_%(Files.Group).zip" />
+		<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(Files)" CompressionLevel="BestCompression" ZipFileName="$(WorkingDir)$(ZipFileName)_$(AssemblyName)_$(BuildCounter)_%(Files.Group).zip" />
 	</Target>
 	<Target Name="DD">
 			<PropertyGroup>
