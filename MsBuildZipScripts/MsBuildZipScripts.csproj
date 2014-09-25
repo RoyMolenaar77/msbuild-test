@@ -117,7 +117,7 @@
 	</Target>
 	<Target Name="DD">	
 		<Exec ContinueOnError="True" Command="$(MSBuildProjectDirectory)\tools\DD.exe /execute C:\Deployment\deploy-concentrator.bat /target 172.16.34.193:5555 /token YourS3cur!tyTok3n">
-			<Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
+			<!--<Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>-->
 		</Exec>
 		
 
