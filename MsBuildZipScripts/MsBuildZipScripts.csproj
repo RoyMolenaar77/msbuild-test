@@ -111,7 +111,7 @@
 	</Target>
 	
 	<Target Name="DD">	
-		<Exec ContinueOnError="True" Command='$(MSBuildProjectDirectory)\tools\DD.exe /execute="$(ScriptLocation)" /target="$(IP):$(Port)" /token="$(Token)"'>
+		<Exec ContinueOnError="True" Command='$(MSBuildProjectDirectory)\tools\DD.exe /execute="$(ScriptLocation) $(IP):$(Port)" /target="$(IP):$(Port)" /token="$(Token)"'>
 			<Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
 		</Exec>		
 		<Message Importance="high" Text="$(ErrorCode)"/>
