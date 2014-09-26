@@ -79,43 +79,44 @@
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets. -->
 	<Target Name="BeforeBuild">
-
 	</Target>
 	<Target Name="AfterBuild">
 	</Target>
+	
 	<Target Name="GenerateZip">
 		<ItemGroup>
-		  <FilesToZip Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\*.dll" />
 		  <Files Include="$(MSBuildProjectDirectory)\Host\*.exe" Exclude="$(MSBuildProjectDirectory)\Host\*.config;$(MSBuildProjectDirectory)\Host\*.pdb;$(MSBuildProjectDirectory)\Host\*.xml">
-			<Group>HOST</Group>
+			<Group>CONCENTRATOR</Group>
 		  </Files>
 		  <Files Include="$(MSBuildProjectDirectory)\Web\*" Exclude="$(MSBuildProjectDirectory)\Web\*.config;$(MSBuildProjectDirectory)\Web\*.pdb;$(MSBuildProjectDirectory)\Web\*.xml">
-			<Group>WEB</Group>
+			<Group>CONCENTRATOR</Group>
 		  </Files>
 		  <Files Include="$(MSBuildProjectDirectory)\Plugin1\*.dll">
-			<Group>PLUGINS1</Group>
+			<Group>CONCENTRATOR</Group>
 		  </Files>
 		  <Files Include="$(MSBuildProjectDirectory)\Plugin2\*.dll">
-			<Group>PLUGINS2</Group>
+			<Group>CONCENTRATOR</Group>
 		  </Files>
 		  <Files Include="$(MSBuildProjectDirectory)\Plugin3\*.dll">
-			<Group>PLUGINS3</Group>
+			<Group>CONCENTRATOR</Group>
 		  </Files>
 		  <OutputDirectory Include="output\" />
 		</ItemGroup>
 		<MakeDir Directories="@(OutputDirectory)" />
 		<PropertyGroup>
 		  <WorkingDir>%(OutputDirectory.Fullpath)</WorkingDir>
-		  <ZipFileName>Artifacts</ZipFileName>
+		  <ZipFileName>Release</ZipFileName>
 		</PropertyGroup>
-		<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(Files)" CompressionLevel="BestCompression" ZipFileName="$(WorkingDir)$(ZipFileName)_$(AssemblyName)_$(BuildMajor).$(BuildMinor).$(BuildVersion).$(BuildRevision)_%(Files.Group).zip" />
+		<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(Files)" CompressionLevel="BestCompression" ZipFileName="$(WorkingDir)$(ZipFileName)_$(BuildMajor).$(BuildMinor).$(BuildVersion).$(BuildRevision)_%(Files.Group).zip" />
 	</Target>
+	
 	<Target Name="DD">	
-		<Exec ContinueOnError="True" Command='$(MSBuildProjectDirectory)\tools\DD.exe /execute="$(ScriptLocation)" /target="$(IP):$(Port)" /token="$(Token)"'><!--/target=172.16.34.193:5555 /token="YourS3cur!tyTok3n"'-->
+		<Exec ContinueOnError="True" Command='$(MSBuildProjectDirectory)\tools\DD.exe /execute="$(ScriptLocation)" /target="$(IP):$(Port)" /token="$(Token)"'>
 			<Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
 		</Exec>		
 		<Message Importance="high" Text="$(ErrorCode)"/>
 	</Target>		
+	
 	<Target Name="SendEmail">
         <MSBuild.ExtensionPack.Communication.Email TaskAction="Send" Subject="Test Email" SmtpServer="yoursmtpserver" MailFrom="$(MailFrom)" MailTo="@(Recipient)" Body="body text" Attachments="@(Attachment)"/>		
 	</Target>
