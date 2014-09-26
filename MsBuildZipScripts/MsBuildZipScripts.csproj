@@ -10,10 +10,10 @@
 		<BuildRevision>0</BuildRevision> <!--This parameter is overwritten by TeamCity-->
    </PropertyGroup>
    <!--These parameters are used to make the DeplyAgent work-->
-   <PropertyGroup>
-		
+   <PropertyGroup>	
 		<Listen></Listen>
 		<Token></Token>
+		<Script>.\</Script>
    </PropertyGroup>
    
    <ItemGroup>
@@ -116,7 +116,7 @@
 		<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(Files)" CompressionLevel="BestCompression" ZipFileName="$(WorkingDir)$(ZipFileName)_$(AssemblyName)_$(BuildMajor).$(BuildMinor).$(BuildVersion).$(BuildRevision)_%(Files.Group).zip" />
 	</Target>
 	<Target Name="DD">	
-		<Exec ContinueOnError="True" Command='$(MSBuildProjectDirectory)\tools\DD.exe /execute="C:\Deployment\deploy-concentrator.bat" /target=172.16.34.193:5555 /token="YourS3cur!tyTok3n"'>
+		<Exec ContinueOnError="True" Command='$(MSBuildProjectDirectory)\tools\DD.exe /execute="$(Script)deploy-concentrator.bat" /target="$(Listen)" /token="$(Token)"'><!--/target=172.16.34.193:5555 /token="YourS3cur!tyTok3n"'-->
 			<Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
 		</Exec>		
 		<Message Importance="high" Text="$(ErrorCode)"/>
