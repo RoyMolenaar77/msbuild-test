@@ -118,7 +118,7 @@
 		<ExecArgs3>/token</ExecArgs3>
 	</PropertyGroup>
 	
-		<Exec ContinueOnError="True" Command='$(MSBuildProjectDirectory)\tools\DD.exe $(ExecArgs1)="$(ScriptLocation)" $(ExecArgs2)="$(IP):$(Port)" $(ExecArgs3)="$(Token)"'>
+		<Exec ContinueOnError="True" Command='$(MSBuildProjectDirectory)\tools\DD.exe /execute="$(ScriptLocation)" /target="$(IP):$(Port)" /token="$(Token)"'>
 			<Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
 		</Exec>		
 		<Message Importance="high" Text="$(ErrorCode)"/>
