@@ -9,13 +9,6 @@
 		<BuildVersion>0</BuildVersion>
 		<BuildRevision>0</BuildRevision> <!--This parameter is overwritten by TeamCity-->
    </PropertyGroup>
-   <!--These parameters are used to make the DeplyAgent work-->
-   <PropertyGroup>	
-		<IP></IP>
-		<Port></Port>
-		<Token></Token>
-		
-   </PropertyGroup>
    
    <ItemGroup>
 		<MailFrom Include="r.molenaar@diract-it.nl"/>
