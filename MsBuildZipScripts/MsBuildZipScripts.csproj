@@ -9,7 +9,7 @@
 		<BuildVersion>0</BuildVersion>
 		<BuildRevision>0</BuildRevision> <!--This parameter is overwritten by TeamCity-->
 		<!--<ScriptLocation>C:\Deployment\$(IP)_$(Port)\deploy-concentrator.bat </ScriptLocation>-->
-		<ScriptLocation>.\deploy-concentrator.bat</ScriptLocation>
+		<ScriptLocation>deploy-concentrator.bat</ScriptLocation>
    </PropertyGroup>
    
    <ItemGroup>
