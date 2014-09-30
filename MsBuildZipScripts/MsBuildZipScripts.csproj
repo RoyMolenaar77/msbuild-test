@@ -18,9 +18,7 @@
 		<!--<Recipient Include="nospam2@freet2odev.com"/>-->
 		<Attachment Include="$(MSBuildProjectDirectory)\output\*.zip"/>
 		<!--<Attachment Include="C:\demo2.txt"/>-->
-		
-		
-		
+				
   </ItemGroup>
       
   <PropertyGroup>
