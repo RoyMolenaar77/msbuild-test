@@ -131,8 +131,8 @@
 	
 	<Target Name="FTP">	
 		<Message Text="TheFiles: @(FilesToUpload)" />
-		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="CreateDirectory" Host="$(FtpHost)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)$(PORT)"/>
-		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="UploadFiles" Host="$(FtpHost)" FileNames="@(FilesToUpload)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)$(PORT)"/>
+		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="CreateDirectory" Host="$(FtpHost)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)_$(PORT)"/>
+		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="UploadFiles" Host="$(FtpHost)" FileNames="@(FilesToUpload)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)_$(PORT)"/>
 	</Target>
 	
 	<Target Name="Email">
