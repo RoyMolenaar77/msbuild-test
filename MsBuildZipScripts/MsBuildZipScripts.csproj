@@ -8,8 +8,11 @@
 		<BuildMajor>2</BuildMajor>
 		<BuildMinor>6</BuildMinor>
 		<BuildVersion>0</BuildVersion>
-		<BuildRevision>0</BuildRevision> <!--This parameter is overwritten by TeamCity-->
-		<ScriptLocation>deploy-concentrator.bat</ScriptLocation>	
+		<BuildRevision>2</BuildRevision> <!--This parameter is overwritten by TeamCity-->
+		<ScriptLocation>deploy-concentrator.bat</ScriptLocation>
+
+		<ZipLocation>output</ZipLocation>
+		
 		<!--<IP>172.16.34.197</IP>-->
 		<!--PORT>5555</PORT>-->
    </PropertyGroup>
@@ -19,7 +22,7 @@
 		<MailFrom Include="r.molenaar@diract-it.nl"/>
 		<Recipient Include="r.molenaar@diract-it.nl"/>
 		<!--<Recipient Include="nospam2@freet2odev.com"/>-->
-		<Attachment Include="$(MSBuildProjectDirectory)\output\*.zip"/>
+		<Attachment Include="$(MSBuildProjectDirectory)\$(ZipLocation)\*.zip"/>
 		<!--<Attachment Include="C:\demo2.txt"/>-->	
    </ItemGroup>
 
@@ -32,7 +35,12 @@
   
    <!--FTP-->
    <ItemGroup>
-  		<FilesToUpload Include="$(MSBuildProjectDirectory)\output\*.zip"/> 
+  		<FilesToUpload Include="$(MSBuildProjectDirectory)\$(ZipLocation)\*.zip"/> 
+  </ItemGroup>
+  
+  <!--Delete old files from output folder-->
+  <ItemGroup>
+   <fileToDelete Include="$(ZipLocation)\*.*" />
   </ItemGroup>
      
   <PropertyGroup>
@@ -123,7 +131,7 @@
 		</PropertyGroup>
 				
 		<!--Clean up old zip files from OutputDirectory-->
-		<Delete Files="$(OutputDirectory)\*.zip" />
+		<Delete Files="@(fileToDelete)" />
 		
 		<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(Files)" CompressionLevel="BestCompression" ZipFileName="$(WorkingDir)$(ZipFileName)_$(BuildMajor).$(BuildMinor).$(BuildVersion).$(BuildRevision)_%(Files.Group).zip" />
 	</Target>
