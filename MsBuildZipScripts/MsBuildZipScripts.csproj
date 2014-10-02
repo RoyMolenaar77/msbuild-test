@@ -10,6 +10,8 @@
 		<BuildVersion>0</BuildVersion>
 		<BuildRevision>0</BuildRevision> <!--This parameter is overwritten by TeamCity-->
 		<ScriptLocation>deploy-concentrator.bat</ScriptLocation>	
+		<!--<IP>172.16.34.197</IP>-->
+		<!--PORT>5555</PORT>-->
    </PropertyGroup>
    
    <!--Email-->
@@ -119,6 +121,10 @@
 		  <WorkingDir>%(OutputDirectory.Fullpath)</WorkingDir>
 		  <ZipFileName>Release</ZipFileName>
 		</PropertyGroup>
+				
+		<!--Clean up old zip files from OutputDirectory-->
+		<Delete Files="$(OutputDirectory)\*.zip" />
+		
 		<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(Files)" CompressionLevel="BestCompression" ZipFileName="$(WorkingDir)$(ZipFileName)_$(BuildMajor).$(BuildMinor).$(BuildVersion).$(BuildRevision)_%(Files.Group).zip" />
 	</Target>
 	
