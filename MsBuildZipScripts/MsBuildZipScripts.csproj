@@ -107,7 +107,7 @@
 	<Target Name="AfterBuild">
 	</Target>
 	
-	<Target Name="GenerateZip">
+	<Target Name="Zip">
 		<ItemGroup>
 		  <Files Include="$(MSBuildProjectDirectory)\Host\*.exe" Exclude="$(MSBuildProjectDirectory)\Host\*.config;$(MSBuildProjectDirectory)\Host\*.pdb;$(MSBuildProjectDirectory)\Host\*.xml">
 			<Group>CONCENTRATOR</Group>
