@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="GenerateZip" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
 	
 	<!--Arguments to be passed from Team city-->
@@ -145,7 +145,7 @@
 		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="UploadFiles" Host="$(FtpHost)" FileNames="@(FilesToUpload)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)_$(PORT)"/>
 	</Target>
 	
-	<Target Name="DD">	
+	<Target Name="DD" AfterTargets="FTP">	
 		<Exec ContinueOnError="True" Command='$(MSBuildProjectDirectory)\tools\DD.exe /execute="$(ScriptLocation)" /target="$(IP):$(Port)" /token="$(Token)"'>
 			<Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
 		</Exec>		
