@@ -1,20 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="GenerateZip" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
 	
+	<!--Arguments to be passed from Team city-->
+	<PropertyGroup>
+		<!--<IP>172.16.34.197</IP>-->
+		<!--<PORT>5555</PORT>-->
+	</PropertyGroup>
+		
 	<!--These parameters are used to generate the Artifacts.Zip-->
-	<!--Teamcity-->
+	<!--Team city-->
   	<PropertyGroup>
 		<BuildMajor>2</BuildMajor>
 		<BuildMinor>6</BuildMinor>
 		<BuildVersion>0</BuildVersion>
-		<BuildRevision>2</BuildRevision> <!--This parameter is overwritten by TeamCity-->
+		<BuildRevision>3454</BuildRevision> <!--This parameter is overwritten by TeamCity-->
 		<ScriptLocation>deploy-concentrator.bat</ScriptLocation>
-
 		<ZipLocation>output</ZipLocation>
-		
-		<!--<IP>172.16.34.197</IP>-->
-		<!--PORT>5555</PORT>-->
    </PropertyGroup>
    
    <!--Email-->
@@ -40,7 +42,7 @@
   
   <!--Delete old files from output folder-->
   <ItemGroup>
-   <fileToDelete Include="$(ZipLocation)\*.*" />
+		<fileToDelete Include="$(ZipLocation)\*.*" />
   </ItemGroup>
      
   <PropertyGroup>
@@ -136,19 +138,20 @@
 		<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(Files)" CompressionLevel="BestCompression" ZipFileName="$(WorkingDir)$(ZipFileName)_$(BuildMajor).$(BuildMinor).$(BuildVersion).$(BuildRevision)_%(Files.Group).zip" />
 	</Target>
 	
+	<Target Name="FTP" AfterTargets="GenerateZip" BeforeTargets="DD">
+		<Message Text="TheFiles: @(FilesToUpload)" Importance="high" />
+				
+		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="CreateDirectory" Host="$(FtpHost)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)_$(PORT)"/>
+		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="UploadFiles" Host="$(FtpHost)" FileNames="@(FilesToUpload)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)_$(PORT)"/>
+	</Target>
+	
 	<Target Name="DD">	
 		<Exec ContinueOnError="True" Command='$(MSBuildProjectDirectory)\tools\DD.exe /execute="$(ScriptLocation)" /target="$(IP):$(Port)" /token="$(Token)"'>
 			<Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
 		</Exec>		
 		<Message Importance="high" Text="$(ErrorCode)"/>
 	</Target>		
-	
-	<Target Name="FTP">	
-		<Message Text="TheFiles: @(FilesToUpload)" />
-		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="CreateDirectory" Host="$(FtpHost)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)_$(PORT)"/>
-		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="UploadFiles" Host="$(FtpHost)" FileNames="@(FilesToUpload)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)_$(PORT)"/>
-	</Target>
-	
+		
 	<Target Name="Email">
         <MSBuild.ExtensionPack.Communication.Email TaskAction="Send" Subject="Test Email" SmtpServer="yoursmtpserver" MailFrom="$(MailFrom)" MailTo="@(Recipient)" Body="body text" Attachments="@(Attachment)"/>		
 	</Target>
