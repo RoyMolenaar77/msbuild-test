@@ -49,7 +49,7 @@
   <!--SQL-->
   <PropertyGroup>
 	<ConnectionString>Data Source=10.172.26.6\SQL2008R2;Initial Catalog=ReleaseManagement;User Id=RoyMolenaar; Password=Welkom123</ConnectionString>
-	<ScriptsLocation>Sql</ScriptsLocation>
+	<ScriptsLocation>Scripts</ScriptsLocation>
   </PropertyGroup>
   
   <!--SQL-->
