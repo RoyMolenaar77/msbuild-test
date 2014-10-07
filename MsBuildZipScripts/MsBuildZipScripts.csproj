@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build;DD" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<!--<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">-->
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-	
+
 	<!--Arguments to be passed from Team city-->
 	<PropertyGroup>
 		<!--<IP>172.16.34.197</IP>-->
@@ -44,7 +45,41 @@
   <ItemGroup>
 		<fileToDelete Include="$(ZipLocation)\*.*" />
   </ItemGroup>
-     
+  
+  <!--SQL-->
+  <PropertyGroup>
+	<ConnectionString>Data Source=10.172.26.6\SQL2008R2;Initial Catalog=ReleaseManagement;User Id=RoyMolenaar; Password=Welkom123</ConnectionString>
+	<ScriptsLocation>Sql</ScriptsLocation>
+  </PropertyGroup>
+  
+  <!--SQL-->
+  <ItemGroup>
+		<SqlScripts Include="$(MSBuildProjectDirectory)\$(ScriptsLocation)\insert.sql" />
+  </ItemGroup>
+  
+  <!--Parameters for insert.sql-->
+  <ItemGroup>
+	<Par1 Include="true">
+		<name>@P1</name>
+		<value>$(BuildMajor)</value>
+	</Par1>
+	<Par2 Include="true">
+		<name>@P2</name>
+		<value>$(BuildMajor)</value>
+	</Par2>
+	<Par3 Include="true">
+		<name>@P3</name>
+		<value>$(BuildVersion)</value>
+	</Par3>	
+	<Par4 Include="true">
+		<name>@P4</name>
+		<value>$(BuildRevision)</value>
+	</Par4>
+  </ItemGroup>
+  
+  
+  
+    
   <PropertyGroup>
     <TPath>$(MSBuildProjectDirectory)\ExtensionPack\$(MSBuildToolsVersion)\MSBuild.ExtensionPack.tasks</TPath>
     <TPath Condition="Exists('$(MSBuildProjectDirectory)\ExtensionPack\$(MSBuildToolsVersion)\MSBuild.ExtensionPack.tasks')">$(MSBuildProjectDirectory)\ExtensionPack\$(MSBuildToolsVersion)\MSBuild.ExtensionPack.tasks</TPath>
@@ -104,7 +139,7 @@
 	<Target Name="BeforeBuild">
 	</Target>
 	
-	<Target Name="AfterBuild">
+	<Target Name="AfterBuild">			
 	</Target>
 	
 	<Target Name="Zip">
@@ -145,7 +180,7 @@
 		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="UploadFiles" Host="$(FtpHost)" FileNames="@(FilesToUpload)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)_$(PORT)"/>
 	</Target>
 	
-	<Target Name="DD" DependsOnTargets="ZIP;FTP">	
+	<Target Name="DD" DependsOnTargets="ZIP;FTP;SQL">	
 		<Exec ContinueOnError="True" Command='$(MSBuildProjectDirectory)\tools\DD.exe /execute="$(ScriptLocation)" /target="$(IP):$(Port)" /token="$(Token)"'>
 			<Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
 		</Exec>		
@@ -155,6 +190,10 @@
 	<Target Name="Email">
         <MSBuild.ExtensionPack.Communication.Email TaskAction="Send" Subject="Test Email" SmtpServer="yoursmtpserver" MailFrom="$(MailFrom)" MailTo="@(Recipient)" Body="body text" Attachments="@(Attachment)"/>		
 	</Target>
+	
+	<Target Name="SQL">
+		<MSBuild.ExtensionPack.SqlServer.SqlExecute TaskAction="Execute" Retry="true" UseTransaction="true" Files="@(SqlScripts)" ConnectionString="$(ConnectionString)" Parameters="@(Par1);@(Par2);@(Par3);@(Par4)"/>			
+    </Target>
 </Project>
 
 
