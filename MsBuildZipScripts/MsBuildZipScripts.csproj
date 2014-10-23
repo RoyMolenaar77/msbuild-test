@@ -182,8 +182,8 @@
 
 	</Target>
 	
-	<Target Name="FTP">
-		<Message Text="TheFiles: @(FilesToUpload)" Importance="high" AfterTargets="Zip"/>
+	<Target Name="FTP" AfterTargets="Zip">
+		<Message Text="TheFiles: @(FilesToUpload)" Importance="high"/>
 				
 		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="CreateDirectory" Host="$(FtpHost)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)_$(PORT)"/>
 		
