@@ -190,6 +190,13 @@
 		<!-- Set a thread to sleep for a period -->
         <MSBuild.ExtensionPack.Framework.Thread TaskAction="Sleep" Timeout="1000"/>
 		
+		
+		<!--FTP-->
+		<ItemGroup>
+			<FilesToUpload Include="$(MSBuildProjectDirectory)\$(ZipLocation)\*.zip"/>
+		</ItemGroup>
+		
+		
 		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="UploadFiles" Host="$(FtpHost)" FileNames="@(FilesToUpload)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)_$(PORT)"/>
 		
 		<!-- Set a thread to sleep for a period -->
