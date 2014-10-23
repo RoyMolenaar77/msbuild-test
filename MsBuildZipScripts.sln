@@ -3,15 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsBuildZipScripts", "MsBuildZipScripts\MsBuildZipScripts.csproj", "{FC5E1F0A-0228-4358-9DE8-F068268DAEF2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnzinDll", "OnzinDll\OnzinDll.csproj", "{73FE3E7B-C959-49F2-8223-3694D93B5148}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
+		SccNumberOfProjects = 1
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://development-concentrator.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = MsBuildZipScripts\\MsBuildZipScripts.csproj
-		SccProjectName1 = MsBuildZipScripts
-		SccLocalPath1 = MsBuildZipScripts
+		SccProjectUniqueName0 = MsBuildZipScripts\\MsBuildZipScripts.csproj
+		SccProjectName0 = MsBuildZipScripts
+		SccAuxPath0 = https://development-concentrator.visualstudio.com/defaultcollection
+		SccLocalPath0 = MsBuildZipScripts
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,6 +25,10 @@ Global
 		{FC5E1F0A-0228-4358-9DE8-F068268DAEF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC5E1F0A-0228-4358-9DE8-F068268DAEF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC5E1F0A-0228-4358-9DE8-F068268DAEF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73FE3E7B-C959-49F2-8223-3694D93B5148}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73FE3E7B-C959-49F2-8223-3694D93B5148}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73FE3E7B-C959-49F2-8223-3694D93B5148}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73FE3E7B-C959-49F2-8223-3694D93B5148}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
