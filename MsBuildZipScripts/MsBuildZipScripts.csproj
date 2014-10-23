@@ -23,11 +23,11 @@
    
    <!--Email-->
    <PropertyGroup>
-		<MailFrom>rmolenaar@vodafonethuis.nl</MailFrom>
+		<MailFrom>concentrator@vodafonethuis.nl</MailFrom>
 		<SmtpServer>smtp.vodafonethuis.nl</SmtpServer>
 		<EmailPort>587</EmailPort>
-		<EmailUser>rmolenaar@vodafonethuis.nl</EmailUser>
-		<EmailPwd>Alfagtv77#</EmailPwd>
+		<EmailUser>concentrator@vodafonethuis.nl</EmailUser>
+		<EmailPwd>Concentrat0r!</EmailPwd>
 		<Subject>"Build revision: $(BuildRevision)"</Subject>
 		<BodyText>Automatically send by TeamCity Buildserver</BodyText>
 		<Priority>High</Priority>
