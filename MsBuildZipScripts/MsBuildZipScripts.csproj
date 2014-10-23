@@ -16,7 +16,7 @@
 		<BuildMajor>2</BuildMajor>
 		<BuildMinor>6</BuildMinor>
 		<BuildVersion>0</BuildVersion>
-		<!--<BuildRevision>0</BuildRevision>--> <!--This parameter is overwritten by TeamCity-->
+		<BuildRevision>0</BuildRevision> <!--This parameter is overwritten by TeamCity-->
 		<ScriptLocation>deploy-concentrator.bat</ScriptLocation>
 		<ZipLocation>output</ZipLocation>
    </PropertyGroup>
