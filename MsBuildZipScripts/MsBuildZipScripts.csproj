@@ -38,7 +38,7 @@
 		<Recipient Include="r.molenaar@diract-it.nl"/>
 		<!--<Recipient Include="d.salar@diract-it.nl"/>-->
 
-		<Attachment Include="$(MSBuildProjectDirectory)\$(ZipLocation)\*.zip"/>
+		
 		<!--<Attachment Include="C:\demo2.txt"/>-->	
    </ItemGroup>
 
@@ -215,6 +215,11 @@
     </Target>
 	
 	<Target Name="Email" AfterTargets="DD">
+		
+		<ItemGroup>
+			<Attachment Include="$(MSBuildProjectDirectory)\$(ZipLocation)\*.zip"/>
+		</ItemGroup>
+	
 	     <MSBuild.ExtensionPack.Communication.Email TaskAction="Send" Subject="$(Subject)" UserName="$(EmailUser)" UserPassword="$(EmailPwd)" EnableSsl="true" Priority="$(Priority)" SmtpServer="$(SmtpServer)" Port="$(EmailPort)" MailFrom="$(MailFrom)" MailTo="@(Recipient)" Body="$(BodyText)" Attachments="@(Attachment)"/>		
 	</Target>
 </Project>
