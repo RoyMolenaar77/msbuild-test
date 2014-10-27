@@ -182,25 +182,25 @@
 	<Target Name="FTP">
 		<Message Text="TheFiles: @(FilesToUpload)" Importance="high"/>
 				
-		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="CreateDirectory" Host="$(FtpHost)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)_$(PORT)"/>
+		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="CreateDirectory" Host="$(FtpHost)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)_$(PORT)" ContinueOnError="ErrorAndStop"/>
 				
 		<!--FTP-->
 		<ItemGroup>
 			<FilesToUpload Include="$(MSBuildProjectDirectory)\$(ZipLocation)\*.zip"/>
 		</ItemGroup>
 			
-		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="UploadFiles" Host="$(FtpHost)" FileNames="@(FilesToUpload)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)_$(PORT)"/>
+		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="UploadFiles" Host="$(FtpHost)" FileNames="@(FilesToUpload)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)_$(PORT)" ContinueOnError="ErrorAndStop"/>
 	</Target>
 	
 	<Target Name="DD" DependsOnTargets="ZIP;FTP">	
-		<Exec ContinueOnError="True" Command='$(MSBuildProjectDirectory)\tools\DD.exe /execute="$(ScriptLocation)" /target="$(IP):$(Port)" /token="$(Token)"'>
+		<Exec ContinueOnError="ErrorAndStop" Command='$(MSBuildProjectDirectory)\tools\DD.exe /execute="$(ScriptLocation)" /target="$(IP):$(Port)" /token="$(Token)"'>
 			<Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
 		</Exec>		
 		<Message Importance="high" Text="$(ErrorCode)"/>
 	</Target>		
 	
 	<Target Name="SQL" DependsOnTargets="DD">
-		<MSBuild.ExtensionPack.SqlServer.SqlExecute TaskAction="Execute" Retry="true" UseTransaction="true" Files="@(SqlScripts)" ConnectionString="$(ConnectionString)" Parameters="@(Par1);@(Par2);@(Par3);@(Par4)"/>			
+		<MSBuild.ExtensionPack.SqlServer.SqlExecute TaskAction="Execute" Retry="true" UseTransaction="true" Files="@(SqlScripts)" ConnectionString="$(ConnectionString)" Parameters="@(Par1);@(Par2);@(Par3);@(Par4)" ContinueOnError="ErrorAndStop"/>			
     </Target>
 	
 	<Target Name="Email" DependsOnTargets="SQL">
@@ -209,7 +209,7 @@
 			<Attachment Include="$(MSBuildProjectDirectory)\$(ZipLocation)\*.zip"/>
 		</ItemGroup>
 	
-	     <MSBuild.ExtensionPack.Communication.Email TaskAction="Send" Subject="$(Subject)" UserName="$(EmailUser)" UserPassword="$(EmailPwd)" EnableSsl="true" Priority="$(Priority)" SmtpServer="$(SmtpServer)" Port="$(EmailPort)" MailFrom="$(MailFrom)" MailTo="@(Recipient)" Body="$(BodyText)" Attachments="@(Attachment)"/>		
+	     <MSBuild.ExtensionPack.Communication.Email TaskAction="Send" Subject="$(Subject)" UserName="$(EmailUser)" UserPassword="$(EmailPwd)" EnableSsl="true" Priority="$(Priority)" SmtpServer="$(SmtpServer)" Port="$(EmailPort)" MailFrom="$(MailFrom)" MailTo="@(Recipient)" Body="$(BodyText)" Attachments="@(Attachment)" ContinueOnError="WarnAndContinue"/>		
 	</Target>
 </Project>
 
