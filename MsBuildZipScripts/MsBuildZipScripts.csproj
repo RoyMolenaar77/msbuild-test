@@ -192,7 +192,7 @@
 		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="UploadFiles" Host="$(FtpHost)" FileNames="@(FilesToUpload)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)_$(PORT)"/>
 	</Target>
 	
-	<Target Name="DD" DependsOnTargets="ZIP;FTP" ContinueOnError="ErrorAndStop">	
+	<Target Name="DD" DependsOnTargets="ZIP;FTP">	
 		<Exec ContinueOnError="True" Command='$(MSBuildProjectDirectory)\tools\DD.exe /execute="$(ScriptLocation)" /target="$(IP):$(Port)" /token="$(Token)"'>
 			<Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
 		</Exec>		
