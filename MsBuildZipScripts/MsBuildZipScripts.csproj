@@ -138,6 +138,15 @@
 		  <Files Include="$(MSBuildProjectDirectory)\..\OnzinDll\bin\Release\*.dll">
 			<Group>CONCENTRATOR</Group>
 		  </Files>
+		  <Files Include="$(MSBuildProjectDirectory)\..\DependencyA\bin\Release\*.dll">
+			<Group>CONCENTRATOR</Group>
+		  </Files>
+		  <Files Include="$(MSBuildProjectDirectory)\..\DependencyB\bin\Release\*.dll">
+			<Group>CONCENTRATOR</Group>
+		  </Files>
+		  <Files Include="$(MSBuildProjectDirectory)\..\Result\bin\Release\*.dll">
+			<Group>CONCENTRATOR</Group>
+		  </Files>
 
 		  <OutputDirectory Include="output\" />
 		</ItemGroup>
