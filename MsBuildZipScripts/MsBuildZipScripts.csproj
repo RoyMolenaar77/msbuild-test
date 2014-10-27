@@ -64,32 +64,7 @@
 	<ConnectionString>Data Source=10.172.26.6\SQL2008R2;Initial Catalog=ReleaseManagement;User Id=RoyMolenaar; Password=Welkom123</ConnectionString>
 	<ScriptsLocation>Scripts</ScriptsLocation>
   </PropertyGroup>
-  
-  <!--SQL-->
-  <ItemGroup>
-		<SqlScripts Include="$(MSBuildProjectDirectory)\$(ScriptsLocation)\insert.sql" />
-  </ItemGroup>
-  
-  <!--Parameters for insert.sql-->
-  <ItemGroup>
-	<Par1 Include="true">
-		<name>@P1</name>
-		<value>$(BuildMajor)</value>
-	</Par1>
-	<Par2 Include="true">
-		<name>@P2</name>
-		<value>$(BuildMajor)</value>
-	</Par2>
-	<Par3 Include="true">
-		<name>@P3</name>
-		<value>$(BuildVersion)</value>
-	</Par3>	
-	<Par4 Include="true">
-		<name>@P4</name>
-		<value>$(BuildRevision)</value>
-	</Par4>
-  </ItemGroup>
-  
+    
   <PropertyGroup>
     <TPath>$(MSBuildProjectDirectory)\ExtensionPack\$(MSBuildToolsVersion)\MSBuild.ExtensionPack.tasks</TPath>
     <TPath Condition="Exists('$(MSBuildProjectDirectory)\ExtensionPack\$(MSBuildToolsVersion)\MSBuild.ExtensionPack.tasks')">$(MSBuildProjectDirectory)\ExtensionPack\$(MSBuildToolsVersion)\MSBuild.ExtensionPack.tasks</TPath>
@@ -200,6 +175,31 @@
 	</Target>		
 	
 	<Target Name="SQL" AfterTargets="DD">
+	  <!--SQL-->
+	  <ItemGroup>
+			<SqlScripts Include="$(MSBuildProjectDirectory)\$(ScriptsLocation)\insert.sql" />
+	  </ItemGroup>
+  
+	  <!--Parameters for insert.sql-->
+	  <ItemGroup>
+		<Par1 Include="true">
+			<name>@P1</name>
+			<value>$(BuildMajor)</value>
+		</Par1>
+		<Par2 Include="true">
+			<name>@P2</name>
+			<value>$(BuildMajor)</value>
+		</Par2>
+		<Par3 Include="true">
+			<name>@P3</name>
+			<value>$(BuildVersion)</value>
+		</Par3>	
+		<Par4 Include="true">
+			<name>@P4</name>
+			<value>$(BuildRevision)</value>
+		</Par4>
+	  </ItemGroup>
+	
 		<MSBuild.ExtensionPack.SqlServer.SqlExecute TaskAction="Execute" Retry="true" UseTransaction="true" Files="@(SqlScripts)" ConnectionString="$(ConnectionString)" Parameters="@(Par1);@(Par2);@(Par3);@(Par4)" ContinueOnError="ErrorAndStop"/>			
     </Target>
 	
