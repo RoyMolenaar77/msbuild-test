@@ -152,7 +152,7 @@
 	<Target Name="AfterBuild">	
 	</Target>
 	
-	<Target Name="Zip" ContinueOnError="ErrorAndStop">
+	<Target Name="Zip">
 		<ItemGroup>
 		  <Files Include="$(MSBuildProjectDirectory)\Host\*.exe;$(MSBuildProjectDirectory)\Host\*.dll" Exclude="$(MSBuildProjectDirectory)\Host\*.config;$(MSBuildProjectDirectory)\Host\*.pdb;$(MSBuildProjectDirectory)\Host\*.xml">
 			<Group>CONCENTRATOR</Group>
@@ -175,30 +175,21 @@
 		<!--Clean up old zip files from OutputDirectory-->
 		<Delete Files="@(fileToDelete)" />
 		
-		<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(Files)" CompressionLevel="BestCompression" ZipFileName="$(WorkingDir)$(ZipFileName)_$(BuildMajor).$(BuildMinor).$(BuildVersion).$(BuildRevision)_%(Files.Group).zip" />
-
-        <!-- Set a thread to sleep for a period -->
-        <MSBuild.ExtensionPack.Framework.Thread TaskAction="Sleep" Timeout="2000"/>
+		<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(Files)" CompressionLevel="BestCompression" ZipFileName="$(WorkingDir)$(ZipFileName)_$(BuildMajor).$(BuildMinor).$(BuildVersion).$(BuildRevision)_%(Files.Group).zip" ContinueOnError="ErrorAndStop"/>
 
 	</Target>
 	
-	<Target Name="FTP" ContinueOnError="ErrorAndStop">
+	<Target Name="FTP">
 		<Message Text="TheFiles: @(FilesToUpload)" Importance="high"/>
 				
 		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="CreateDirectory" Host="$(FtpHost)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)_$(PORT)"/>
-		
-		<!-- Set a thread to sleep for a period -->
-        <MSBuild.ExtensionPack.Framework.Thread TaskAction="Sleep" Timeout="1000"/>
-		
+				
 		<!--FTP-->
 		<ItemGroup>
 			<FilesToUpload Include="$(MSBuildProjectDirectory)\$(ZipLocation)\*.zip"/>
 		</ItemGroup>
 			
 		<MSBuild.ExtensionPack.Communication.Ftp TaskAction="UploadFiles" Host="$(FtpHost)" FileNames="@(FilesToUpload)" UserName="$(FtpUser)" UserPassword="$(FtpPass)" RemoteDirectoryName="$(IP)_$(PORT)"/>
-		
-		<!-- Set a thread to sleep for a period -->
-        <MSBuild.ExtensionPack.Framework.Thread TaskAction="Sleep" Timeout="1000"/>
 	</Target>
 	
 	<Target Name="DD" DependsOnTargets="ZIP;FTP" ContinueOnError="ErrorAndStop">	
@@ -208,11 +199,11 @@
 		<Message Importance="high" Text="$(ErrorCode)"/>
 	</Target>		
 	
-	<Target Name="SQL" DependsOnTargets="DD" ContinueOnError="ErrorAndStop">
+	<Target Name="SQL" DependsOnTargets="DD">
 		<MSBuild.ExtensionPack.SqlServer.SqlExecute TaskAction="Execute" Retry="true" UseTransaction="true" Files="@(SqlScripts)" ConnectionString="$(ConnectionString)" Parameters="@(Par1);@(Par2);@(Par3);@(Par4)"/>			
     </Target>
 	
-	<Target Name="Email" DependsOnTargets="SQL" ContinueOnError="WarnAndContinue">
+	<Target Name="Email" DependsOnTargets="SQL">
 		
 		<ItemGroup>
 			<Attachment Include="$(MSBuildProjectDirectory)\$(ZipLocation)\*.zip"/>
