@@ -197,7 +197,7 @@
 		</Par1>
 		<Par2 Include="true">
 			<name>@P2</name>
-			<value>$(BuildMajor)</value>
+			<value>$(BuildMinor)</value>
 		</Par2>
 		<Par3 Include="true">
 			<name>@P3</name>

@@ -11,6 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyB", "DependencyB\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Result", "Result\Result.csproj", "{9B10C9B6-F690-46D0-845E-A847BDDDC88E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8FD7A75-AA2E-4AF8-A6DF-C79963DF3DDF}"
+	ProjectSection(SolutionItems) = preProject
+		CreateRevisions.sql = CreateRevisions.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 1
