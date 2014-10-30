@@ -29,7 +29,7 @@
 		<EmailUser>concentrator@vodafonethuis.nl</EmailUser>
 		<EmailPwd>Concentrat0r!</EmailPwd>
 		<Subject>"Build revision: $(BuildRevision)"</Subject>
-		<BodyText>Automatically send by TeamCity Buildserver</BodyText>
+		<BodyText>Automatically send by TeamCity Buildserver. Package is ready for Host: $(IP):$(Port)</BodyText>
 		<Priority>High</Priority>
    </PropertyGroup>
     
