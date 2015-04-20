@@ -1,13 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build,DD" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+<!-- Comment out when on development workstation -->
+<Project ToolsVersion="4.0" DefaultTargets="Build;DD" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+<!-- Comment out when on production build server -->
 <!--<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">-->
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
 
 	<!--Arguments to be passed from Team city-->
+	<!-- Comment out when on production build server -->
 	<PropertyGroup>
-		<!--<IP>172.16.34.183</IP>-->
-		<!--<PORT>5555</PORT>-->
-		<!--<Token>YourS3cur!tyTok3n</Token>-->
+		<IP>172.16.34.183</IP> <!--IP address of target deployment server -->
+		<PORT>5555</PORT> <!--IP address of target deployment server -->
+		<Token>YourS3cur!tyTok3n</Token>
 	</PropertyGroup>
 		
 	<!--These parameters are used to generate the Artifacts.Zip-->
@@ -19,6 +24,7 @@
 		<BuildRevision>0</BuildRevision> <!--This parameter is overwritten by TeamCity-->
 		<ScriptLocation>deploy-concentrator.bat</ScriptLocation>
 		<ZipLocation>output</ZipLocation>
+		<Disclaimer>disclaimer</Disclaimer>
    </PropertyGroup>
    
    <!--Email-->
@@ -36,10 +42,8 @@
    <!--Email-->
    <ItemGroup>
 		<Recipient Include="r.molenaar@diract-it.nl"/>
-		<!--<Recipient Include="d.salar@diract-it.nl"/>-->
-
-		
-		<!--<Attachment Include="C:\demo2.txt"/>-->	
+		<!--<Recipient Include="d.salar@diract-it.nl"/>-->	
+		<Attachment Include="$(MSBuildProjectDirectory)\$(Disclaimer)\readme.txt"/>	
    </ItemGroup>
 
    <!--FTP-->
